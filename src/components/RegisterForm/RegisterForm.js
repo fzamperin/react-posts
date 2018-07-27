@@ -1,75 +1,91 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as userActions from '../../actions/userActions.js';
 
 class RegisterForm extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onSave(event) {
+    event.preventDefault();
+    this.props.actions.registerUser(this.state);
+  }
+
   render() {
+    let { email, password, firstname, surname } = this.state;
     return (
       <div>
-        <section class="hero">
-          <div class="hero-body">
-            <div class="container">
-              <h1 class="title">
+        <section className="hero">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
                 Register
               </h1>
-              <h2 class="subtitle">
+              <h2 className="subtitle">
                 Please fill your info to be able to create and see posts.
               </h2>
             </div>
           </div>
         </section>
-        <section class="hero">
-          <div class="hero-body">
-            <form>
-              <div class="columns">
-                <div class="column is-4 is-offset-4">
-                  <div class="field">
-                    <label class="label">Name</label>
-                    <p class="control">
-                      <input class="input" type="text" placeholder="Name"></input>
+        <section className="hero">
+          <div className="hero-body">
+            <form onSubmit={this.onSubmit}>
+              <div className="columns">
+                <div className="column is-4 is-offset-4">
+                  <div className="field">
+                    <label className="label">Firstname</label>
+                    <p className="control">
+                      <input className="input" type="text" placeholder="Firstname" onChange={e => this.setState({firstname: e.target.value})} value={firstname}></input>
                     </p>
                   </div>
                 </div>
               </div>
-              <div class="columns">
-                <div class="column is-4 is-offset-4">
-                  <div class="field">
-                    <label class="label">Surname</label>
-                    <p class="control">
-                      <input class="input" type="text" placeholder="Surname"></input>
+              <div className="columns">
+                <div className="column is-4 is-offset-4">
+                  <div className="field">
+                    <label className="label">Surname</label>
+                    <p className="control">
+                      <input className="input" type="text" placeholder="Surname" onChange={e => this.setState({surname: e.target.value})} value={surname}></input>
                     </p>
                   </div>
                 </div>
               </div>
-              <div class="columns">
-                <div class="column is-4 is-offset-4">
-                  <div class="field">
-                    <label class="label">Email</label>
-                    <p class="control has-icons-left">
-                      <input class="input" type="email" placeholder="Email"></input>
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-envelope"></i>
+              <div className="columns">
+                <div className="column is-4 is-offset-4">
+                  <div className="field">
+                    <label className="label">Email</label>
+                    <p className="control has-icons-left">
+                      <input className="input" type="email" placeholder="Email" onChange={e => this.setState({email: e.target.value})} value={email}></input>
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-envelope"></i>
                       </span>
                     </p>
                   </div>
                 </div>
               </div>
-              <div class="columns">
-                <div class="column is-4 is-offset-4">
-                  <div class="field">
-                    <label class="label">Password</label>
-                    <p class="control has-icons-left">
-                      <input class="input" type="password" placeholder="Password"></input>
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-key"></i>
+              <div className="columns">
+                <div className="column is-4 is-offset-4">
+                  <div className="field">
+                    <label className="label">Password</label>
+                    <p className="control has-icons-left">
+                      <input className="input" type="password" placeholder="Password" onChange={e => this.setState({password: e.target.value})} value={password}></input>
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-key"></i>
                       </span>
                     </p>
                   </div>
                 </div>
               </div>
-              <div class="columns buttons">
-                <div class="column has-text-centered is-4 is-offset-4">
-                  <button class="button is-link">Register</button>
-                  <Link class="button is-text" to="/">Login</Link>
+              <div className="columns buttons">
+                <div className="column has-text-centered is-4 is-offset-4">
+                  <button className="button is-link">Register</button>
+                  <Link className="button is-text" to="/">Login</Link>
                 </div>
               </div>
             </form>
@@ -78,6 +94,17 @@ class RegisterForm extends Component {
       </div>
     );
   }
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.actions.registerUser(this.state);
+    this.setState({ email: '', password: '', firstname: '', surname: '' });
+  }
 }
 
-export default RegisterForm;
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(userActions, dispatch)
+  };
+}
+
+export default connect(null, mapDispatchToProps)(RegisterForm);

@@ -1,37 +1,39 @@
 class UserApi {
 
-  requestHeaders() {
-    let headers = new Headers({ 'Content-Type': 'application/json'});
-    let token = sessionStorage.getItem('jwt');
-    if(token) {
-      headers.append({ 'AUTHORIZATION' : `Bearer ${sessionStorage.getItem('jwt')}` });
+  static requestHeaders() {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let token = sessionStorage.getItem('token');
+    if (token) {
+      headers.append('AUTHORIZATION', `Bearer ${token}`);
     }
     return headers;
   }
 
   static login(credentials) {
 
-    const request = new Request(`${process.env.API_HOST}/login`, {
+    const request = new Request('http://localhost:3001/login', {
       method: 'POST',
-      headers: requestHeaders(),
-      body: JSON.stringify({auth: credentials})
+      headers: UserApi.requestHeaders(),
+      body: JSON.stringify(credentials)
     });
 
     return fetch(request).then(response => {
       return response.json();
     }).catch(error => {
+      console.log(error);
       return error;
     });
   }
 
-  static logout() {
+  static register(User) {
 
-    const request = new Request(`${process.env.API_HOST}/logout`, {
-      method: 'DELETE',
-      headers: requestHeaders(),
+    const request = new Request('http://localhost:3001/register', {
+      method: 'POST',
+      headers: UserApi.requestHeaders(),
+      body: JSON.stringify(User)
     });
-    return fetch(request).the
-    n(response => {
+
+    return fetch(request).then(response => {
       return response.json();
     }).catch(error => {
       return error;

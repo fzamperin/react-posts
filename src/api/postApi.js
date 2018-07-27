@@ -1,20 +1,20 @@
 class PostApi {
 
-  requestHeaders() {
-    let headers = new Headers({ 'Content-Type': 'application/json'});
-    let token = sessionStorage.getItem('jwt');
-    if(token) {
-      headers.append({ 'AUTHORIZATION' : `Bearer ${sessionStorage.getItem('jwt')}` });
+
+  static requestHeaders() {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let token = sessionStorage.getItem('token');
+    if (token) {
+      headers.append('AUTHORIZATION', `Bearer ${token}`);
     }
     return headers;
   }
 
-  static login(credentials) {
+  static getAllPosts() {
 
-    const request = new Request(`${process.env.API_HOST}/login`, {
-      method: 'POST',
-      headers: requestHeaders(),
-      body: JSON.stringify({auth: credentials})
+    const request = new Request('http://localhost:3001/posts', {
+      method: 'GET',
+      headers: PostApi.requestHeaders()
     });
 
     return fetch(request).then(response => {
@@ -24,14 +24,29 @@ class PostApi {
     });
   }
 
-  static logout() {
+  static createPost(Post) {
 
-    const request = new Request(`${process.env.API_HOST}/logout`, {
-      method: 'DELETE',
-      headers: requestHeaders(),
+    const request = new Request('http://localhost:3001/create/post', {
+      method: 'POST',
+      headers: PostApi.requestHeaders(),
+      body: JSON.stringify(Post)
     });
-    return fetch(request).the
-    n(response => {
+
+    return fetch(request).then(response => {
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+  }
+
+  static deletePost(id) {
+
+    const request = new Request('http://localhost:3001/post/' + id, {
+      method: 'DELETE',
+      headers: PostApi.requestHeaders()
+    });
+
+    return fetch(request).then(response => {
       return response.json();
     }).catch(error => {
       return error;
