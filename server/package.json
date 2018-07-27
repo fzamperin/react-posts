@@ -1,0 +1,35 @@
+{
+  "name": "alumnet-api",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "test": "nyc --reporter=html mocha -c --recursive --exit",
+    "dev": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "bluebird": "^3.5.1",
+    "body-parser": "~1.18.2",
+    "date-fns": "^1.29.0",
+    "debug": "~2.6.9",
+    "express": "~4.16.3",
+    "gulp": "^3.9.1",
+    "jsonwebtoken": "^8.2.1",
+    "morgan": "~1.9.0",
+    "mysql2": "^1.5.3",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
+    "sequelize": "^4.37.7",
+    "sequelize-cli": "^4.0.0",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "eslint": "^5.2.0",
+    "mocha": "^5.1.1",
+    "nodemon": "^1.17.4",
+    "nyc": "^11.7.1"
+  }
+}

@@ -1,0 +1,20 @@
+image: node:carbon
+
+services:
+  - mariadb:latest
+
+variables:
+  NODE_ENV: test_dev
+  MYSQL_DATABASE: doczaz
+  MYSQL_ROOT_PASSWORD: cK8YNB9h0nYYqlYo
+
+stages:
+  - test
+
+run_tests:
+  stage: test
+  script:
+    - npm install
+    - node_modules/.bin/gulp sequelize:drop
+    - node_modules/.bin/sequelize db:seed:all
+    - npm test
