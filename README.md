@@ -16,6 +16,8 @@ First install dependencies
 npm i
 ```
 
+Set your NODE_ENV to localhost
+
 Second create database (mysql or mariadb) from command-line, the database created will have the attributes from server/config/database.js
 ```
 node_modules/.bin/sequelize db:create
